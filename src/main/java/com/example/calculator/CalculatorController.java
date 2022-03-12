@@ -109,6 +109,7 @@ public class CalculatorController {
                 base=2;
                 break;
         }
+        refreshButton();
     }
 
     @FXML
@@ -119,8 +120,16 @@ public class CalculatorController {
 
     @FXML
     void solve(ActionEvent event) {
-        expretion = ArithmeticApp.solve(expretion, base);
-        setLine();
+        try{
+            expretion = ArithmeticApp.solve(expretion, base);
+            setLine();
+            expretion="";
+        }
+        catch (Exception e){
+            expretion=e.getMessage();
+            setLine();
+            expretion="";
+        }
     }
 
     @FXML
@@ -138,6 +147,50 @@ public class CalculatorController {
         return null;
     }
 
+    private void refreshButton(){
+        zero.setOnAction(null);
+        one.setOnAction(null);
+        two.setOnAction(null);
+        three.setOnAction(null);
+        four.setOnAction(null);
+        five.setOnAction(null);
+        six.setOnAction(null);
+        seven.setOnAction(null);
+        eight.setOnAction(null);
+        nine.setOnAction(null);
+        A.setOnAction(null);
+        B.setOnAction(null);
+        C.setOnAction(null);
+        D.setOnAction(null);
+        E.setOnAction(null);
+        F.setOnAction(null);
+        if(base>0){
+            zero.setOnAction((even)->type1('0'));
+            one.setOnAction((even)->type1('1'));
+        }
+        if(base>2){
+            two.setOnAction((even)->type1('2'));
+            three.setOnAction((even)->type1('3'));
+            four.setOnAction((even)->type1('4'));
+            five.setOnAction((even)->type1('5'));
+            six.setOnAction((even)->type1('6'));
+            seven.setOnAction((even)->type1('7'));
+        }
+        if(base>8){
+            eight.setOnAction((even)->type1('8'));
+            nine.setOnAction((even)->type1('9'));
+        }
+        if(base>10){
+            A.setOnAction((even)->type1('A'));
+            B.setOnAction((even)->type1('B'));
+            C.setOnAction((even)->type1('C'));
+            D.setOnAction((even)->type1('D'));
+            E.setOnAction((even)->type1('E'));
+            F.setOnAction((even)->type1('F'));
+        }
+
+    }
+
     @FXML
     void initialize() {
         //init text field
@@ -148,23 +201,12 @@ public class CalculatorController {
         listBox.getItems().add("dec");
         listBox.getItems().add("oct");
         listBox.getItems().add("bin");
+        //default value to listBox
+        listBox.getSelectionModel().selectFirst();
+        base = 16;
 
         //init on action parameter fot buttom
-        one.setOnAction((even)->type1('1'));
-        two.setOnAction((even)->type1('2'));
-        three.setOnAction((even)->type1('3'));
-        four.setOnAction((even)->type1('4'));
-        five.setOnAction((even)->type1('5'));
-        six.setOnAction((even)->type1('6'));
-        seven.setOnAction((even)->type1('7'));
-        eight.setOnAction((even)->type1('8'));
-        nine.setOnAction((even)->type1('9'));
-        A.setOnAction((even)->type1('A'));
-        B.setOnAction((even)->type1('B'));
-        C.setOnAction((even)->type1('C'));
-        D.setOnAction((even)->type1('D'));
-        E.setOnAction((even)->type1('E'));
-        F.setOnAction((even)->type1('F'));
+        refreshButton();
 
         sub.setOnAction((even)->type1('-'));
         add.setOnAction((even)->type1('+'));

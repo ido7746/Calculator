@@ -6,38 +6,33 @@ import java.util.*;
 
 public class ArithmeticApp{
     public static String solve(String expretion, int base){
-        try{
-            // check the expretion
-            for(int i=0;i<expretion.length();i++){
-                char digit = expretion.charAt(i);
-                if(digit<'A'&&digit<'Z'&&digit!='-'&&digit!='+'&&digit!='*'&&digit!='/'&&digit<'1'&&digit>'9')
-                    throw new RuntimeException("Error: invalid expression: \""+digit+"\"");
-            }
-            while(expretion.indexOf('*')!=-1 || expretion.indexOf('/')!=-1){
-                int indexOfMul = expretion.indexOf('*');
-                int indexOfDiv = expretion.indexOf('/');
-                if(indexOfDiv==-1 || (indexOfMul<indexOfDiv&&indexOfMul!=-1)){
-                    expretion = doOperate(expretion, '*', base);
-                }
-                else if(indexOfMul==-1 || (indexOfDiv<indexOfMul&&indexOfDiv!=-1)){
-                    expretion = doOperate(expretion, '/', base);
-                }
-            }
-            while(expretion.indexOf('+')!=-1 || expretion.indexOf('-',1)!=-1){
-                int indexOfAdd = expretion.indexOf('+');
-                int indexOfSub = expretion.indexOf('-',1);
-                if(indexOfSub==-1 || (indexOfAdd<indexOfSub&&indexOfAdd!=-1)){
-                    expretion = doOperate(expretion, '+', base);
-                }
-                else if(indexOfAdd==-1 || (indexOfSub<indexOfAdd&&indexOfSub!=-1)){
-                    expretion = doOperate(expretion, '-', base);
-                }
-            }
-            return expretion.toUpperCase();
+        // check the expretion
+        for(int i=0;i<expretion.length();i++){
+            char digit = expretion.charAt(i);
+            if(digit<'A'&&digit<'Z'&&digit!='-'&&digit!='+'&&digit!='*'&&digit!='/'&&digit<'1'&&digit>'9')
+                throw new RuntimeException("Error: invalid expression: \""+digit+"\"");
         }
-        catch (Exception e){
-            return e.getMessage();
+        while(expretion.indexOf('*')!=-1 || expretion.indexOf('/')!=-1){
+            int indexOfMul = expretion.indexOf('*');
+            int indexOfDiv = expretion.indexOf('/');
+            if(indexOfDiv==-1 || (indexOfMul<indexOfDiv&&indexOfMul!=-1)){
+                expretion = doOperate(expretion, '*', base);
+            }
+            else if(indexOfMul==-1 || (indexOfDiv<indexOfMul&&indexOfDiv!=-1)){
+                expretion = doOperate(expretion, '/', base);
+            }
         }
+        while(expretion.indexOf('+')!=-1 || expretion.indexOf('-',1)!=-1){
+            int indexOfAdd = expretion.indexOf('+');
+            int indexOfSub = expretion.indexOf('-',1);
+            if(indexOfSub==-1 || (indexOfAdd<indexOfSub&&indexOfAdd!=-1)){
+                expretion = doOperate(expretion, '+', base);
+            }
+            else if(indexOfAdd==-1 || (indexOfSub<indexOfAdd&&indexOfSub!=-1)){
+                expretion = doOperate(expretion, '-', base);
+            }
+        }
+        return expretion.toUpperCase();
     }
     static public int convertToDecimal(int base, String num){
         try {
